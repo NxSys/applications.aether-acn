@@ -1,0 +1,114 @@
+/* System CSS */
+
+@import url(http://fonts.googleapis.com/css?family=Share+Tech+Mono);
+
+#wacc-terminal
+{
+	position: relative;
+	font-family: "Share Tech Mono", "Terminal", "Lucida Console", monospace;
+	font-weight: 500;
+}
+
+#input,
+#history .input
+{
+	margin: 2px 0 2px 0;
+}
+
+#prompt,
+#history .prompt
+{
+	float: left;
+	margin-right: 2px;
+}
+
+#command-line,
+#history .command-line
+{
+	/* Declared explicitly here because IE7 does not seem to support inherit for font-family on inputs */
+	font-family: "Share Tech Mono", "Terminal", "Lucida Console", monospace;
+	border-style: none;
+	background: transparent;
+	margin: 0;
+	padding: 0;
+	float: left;
+}
+
+#command-line:focus
+{
+    outline: none;
+}
+
+#wacc-config-overlay
+{
+	position: absolute;
+	width: 300px;
+	margin: 0px auto;
+	padding: 10px;
+	z-index: 1000;
+	border-radius: 4px;
+	background: #888888;
+	color: #ffffff;
+	opacity: 0.9;
+	font-family: sans;
+	font-size: medium;
+	text-align: center;
+}
+
+#wacc-config-form
+{
+	display: block;
+	width: 75%;
+	margin: 2px auto;
+	padding: 5px;
+	border-radius: 4px;
+	background: #ffffff;
+	color: #000000;
+	opacity: 1;
+	text-align: left;
+	font-family: sans;
+}
+
+.colorbox
+{
+	display: block;
+	height: 5px;
+	width: 5px;
+}
+
+#history
+{
+	white-space: pre-wrap;
+}
+
+/* These are command output line class styles */
+#history > .info
+{
+	color: #008800; /* green text */
+}
+#history > .comment
+{
+	color: #FFFF00; /* yellow text */
+}
+#history > .question
+{
+	color: #000000; /* black text on a cyan background */
+	background-color: #0080ff
+}
+#history > .error
+{
+	/* white text on a red background */
+	color: #FFFFFF;
+	background-color: #FF0000;
+}
+
+/* User CSS */
+
+#main-container
+{
+	/*
+	This property, if set, will dictate the max height of the console's prompt and history
+	Note: It must be set in px
+	*/
+	max-height: 500px;
+}

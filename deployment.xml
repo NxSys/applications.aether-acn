@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<package xmlns="http://www.zend.com/server/deployment-descriptor/1.0" version="1.0">
+    <name>WACC</name>
+    <version>
+        <release>0.1.61</release>
+    </version>
+    <appdir>approot</appdir>
+    <docroot>webroot</docroot> <!-- data | data/webroot -->
+    <scriptsdir>scripts</scriptsdir>
+    <dependencies>
+        <required>
+            <php>
+                <min>5.3.5</min>
+            </php>
+        </required>
+    </dependencies>
+</package>

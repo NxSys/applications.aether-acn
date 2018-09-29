@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>WACC Form</title>
+	<base href="webroot" />
+
+	<link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
+	<link rel="stylesheet" href="css/wacc.css">
+</head>
+<body onload="document.getElementById('cmdfrm').submit();">
+	<center><strong>WACC Command Form</strong><br /><small>(Party like its 1995!)</small></center>
+	<iframe src="about:blank" id="history" width="99%" height="300">
+		no iframe?
+	</iframe>
+	<div id="wacc-console">
+<form action="index.php/docmd" method="post" target="history" id="cmdfrm">
+	<div id="input">
+		<label for="command-line" id="prompt">WACC&gt;</label>
+			<input type="text" name="cmd" id="command-line" value="list --raw"/><br />
+
+		<label for="sess" id="promp2">SID=</label>
+			<input type="text" name="sid" value="NULL" id="sess"/><br />
+		<label for="sub">&nbsp;</label>
+			<input type="submit" /><br />
+		<input type="hidden" name="useraw" value="true" />
+	</div>
+		</form>
+	</div>
+</body>
+</html>

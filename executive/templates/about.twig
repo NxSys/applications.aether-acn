@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!-- ===========================================================================
+# about.twig
+# $Id$
+#
+# Description:
+#  Template file for displaying about/readme information
+# Meta Tags:
+# @package WACC
+# @subpackage Templates
+# @author Chris R. Feamster <cfeamster@f2developments.com>
+# @author $LastChangedBy$
+#
+# @version $Revision$
+# @copyright Copyright 2013-2015 Nexus Systems, Inc.
+# @license https://nxsys.org/spaces/wacc/wiki/License
+# Please see the license.txt file or the url above for full copyright and license information.
+============================================================================ -->
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>WACC | README $Revision$</title>
+
+	<link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
+	<style type="text/css">
+		body
+		{
+			font-family: "Terminal", " Lucida Console", monospace;
+			generic-family: monospace;
+			font-weight: bolder;
+			color: #FF7E00; /* SAE amber */
+			background-color: #090909 ; /* dark grey */
+		}
+		pre
+		{
+			background-color: #323232;
+		}
+		#wacc-about
+		{
+			white-space: normal;
+		}
+
+		a.wiki-anchor { display: none; margin-left: 6px; text-decoration: none; }
+		a.wiki-anchor:hover { color: #aaa !important; text-decoration: none; }
+	</style>
+</head>
+<body>
+	<div class="container" id="wacc-about">
+		<div style="text-align: center;">
+			Welcome to...<br />
+			<h1>
+				WACC!<br />
+				<small>Web Application Command Console<br />{{wacc_ver}}</small>
+			</h1>
+		</div>
+		{% include 'readme-redmine.html.twig' %}
+	</div>
+</body></html>

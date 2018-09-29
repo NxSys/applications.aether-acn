@@ -1,0 +1,50 @@
+{
+    "name": "nxsys/application.aethershell",
+    "description": "AetherShell",
+    "keywords": ["distributed admin tool", "webshell", "webterminal", "shell", "terminal"],
+    "homepage": "http://nxsys.org/spaces/aethershell",
+    "license": ["AGPL-3.0", "proprietary"],
+    "type": "project",
+    "support":
+    {
+        "docs": "https://aethershell.readthedocs.io/en/latest",
+        "email": "os@nxsysts.com",
+        "issues": "https://nxsys.assembla.com/spaces/wacc/tickets",
+        "forum": "https://nxsys.assembla.com/spaces/wacc/messages",
+        "wiki": "http://code.fnetit.net/projects/wacc/wiki",
+        "source": "https://nxsys.assembla.com/spaces/wacc/subversion/source",
+        "rss": "https://nxsys.assembla.com/spaces/wacc/stream.rss"
+     },
+    "authors":
+    [
+        {
+            "name": "Nexus Systems, Inc.",
+            "homepage": "https://nexussystemsinc.com/about/foss-commitment.html",
+            "email": "code@nxsysts.com",
+            "role": "Dev Team"
+        }
+    ],
+    "config":
+    {
+        "optimize-autoloader": true
+    },
+    "autoload":
+    {
+        "psr-4": { "": "src/" }
+    },
+    "require":
+    {
+        "php": "^7.1",
+        "nxsys/framework.wacc": "*@dev"
+    },
+    "require-dev":
+    {
+
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "repositories": [
+        {"type": "vcs", "url": "https://subversion.assembla.com/svn/wacc/trunk/src/Wacc",
+            "package-path": "src/Wacc"}
+    ]
+}
