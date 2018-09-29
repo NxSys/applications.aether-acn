@@ -1,0 +1,35 @@
+Web Application Command Console - Web Application Command Line Administrative Supplement
+Copyright (c) 2013 F2 Developments, Inc. Any rights not expressly granted herein are reserved.
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+Named components copyrighted and used under license from other parties as indicated below:
+jQuery:
+	Copyright 2013 jQuery Foundation and other contributors
+Symfony Console Component:
+	Copyright (c) 2004-2012 Fabien Potencier
+Silex:
+	Copyright (c) 2010 Fabien Potencier
+
+Questions or concerns can be directed toward any of the following channels:
+Web:
+	http://www.f2developments.com/home/contact-us.html
+Email:
+	inquires@f2developments.com
+Post:
+	F2 Developments, Inc.
+	c/o Nexus Systems, Inc.
+	1060 First Ave STE 400
+	King of Prussia PA 19406-1336
+	USA

@@ -1,0 +1,36 @@
+{
+    "name": "wacc/wacc-app",
+    "description": "Web Application Command Console",
+    "homepage": "http://code.fnetit.net/projects/wacc",
+    "license": "AGPL-3.0",
+    "require": {
+        "symfony/console": "v2.1.5",
+        "symfony/class-loader": "v2.1.5",
+        "symfony/filesystem": "v2.1.5",
+        "symfony/finder": "v2.1.6",
+        "symfony/process": "v2.1.5",
+        "silex/silex": "1.0.x-dev",
+        "twig/twig": "v1.11.1"
+    },
+    "require-dev": {
+        "symfony/console": "2.1.x-dev",
+        "symfony/filesystem": "2.1.*@dev"
+    },
+    "authors": [
+        {
+            "name": "Chris R. Feamster",
+            "homepage": "http://www.f2dev.com/about/foss-commitment.html",
+            "email": "cfeamster@f2developments.com"
+        }
+    ],
+    "support": {
+          "issues": "http://code.fnetit.net/projects/wacc/issues",
+          "forum": "http://code.fnetit.net/projects/wacc/board",
+          "wiki": "http://code.fnetit.net/projects/wacc/wiki",
+          "source": "http://code.fnetit.net/projects/wacc/repository"
+     },
+    "minimum-stability": "dev",
+    "config": {
+        "vendor-dir": "approot/system/libs"
+    }
+}

@@ -1,0 +1,33 @@
+###########################################################
+# ApiGen Config
+# $Id$
+#
+# @link http://f2dev.com/prjs/wacc
+# @author Chris R. Feamster <cfeamster@f2developments.com>
+# @author $LastChangedBy$
+#
+# @version $Revision$
+#
+# @copyright Copyright 2013 F2 Developments, Inc.
+# @license http://f2dev.com/prjs/wacc/license.html
+# Please see the license.txt file or the url above for full copyright and license information.
+###########################################################
+source: 
+	- ../approot
+	- ../webroot
+destination: ../docs/api
+exclude:
+	- */cache/*
+	- */system/tests/* 
+	#Because SfC classes are wierd...
+	- */approot/system/libs/*
+	- */system/cmdlets/sql/rb.php
+#skipDocPath: */approot/system/libs/*
+#skipDocPrefix: RedBean
+
+main: Wacc
+title: Web Application Command Console
+
+
+#googleAnalytics: UA-18562080-4
+download: yes

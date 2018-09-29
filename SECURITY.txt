@@ -1,0 +1,12 @@
+Don't be stupid. Observe common sense security precatutions:
+
+* Don't take chances with user access
+* Don't needlessly expose login interfaces
+* Check your logs regularly
+* Investigate unusual activity.
+  Prompt action may prevent a minor incident from turning in to a serious one!
+* Use secure channels whenever possible
+
+
+
+ BE SURE YOU'RE SECURE!
