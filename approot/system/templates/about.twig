@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<!-- ===========================================================================
+# about.twig
+# $Id$
+#
+# Description:
+#  Template file for displaying about/readme information
+# Meta Tags:
+# @package WACC
+# @subpackage Templates
+# @author Chris Feamster <cfeamster@f2developments.com>
+# @author $LastChangedBy$
+#
+# @version $Revision$
+# @copyright (c) 2012-2022 F2 Developments, Inc. All rights reserved.
+============================================================================ -->
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>WACC | README $Revision$</title>
+
+	<link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
+	<style type="text/css">
+		body
+		{
+			font-family: "Terminal", " Lucida Console", monospace;
+			generic-family: monospace;
+			font-weight: bolder;
+			color: #FF7E00; /* amber */
+			background-color: #090909 ; /* drk grey*/
+		}
+		pre
+		{
+			background-color: #323232;
+		}
+		a.wiki-anchor { display: none; margin-left: 6px; text-decoration: none; }
+		a.wiki-anchor:hover { color: #aaa !important; text-decoration: none; }
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div style="text-align: center;">
+			Welcome to...<br />
+			<h1>
+				WACC!<br />
+				<small>Web Application Command Console<br />0.1.$Revision$</small>
+			</h1>
+		</div>
+		{% include 'readme-redmine.html.twig' %}
+	</div>
+</body></html>
