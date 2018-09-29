@@ -1,18 +1,18 @@
 {
     "name": "nxsys/application.aether",
-    "description": "Aether.Sh: Cloud Console",
+    "description": "Aether.sh: Cloud Console",
     "keywords": ["distributed admin tool", "webshell", "webterminal", "shell", "terminal"],
     "homepage": "http://nxsys.org/spaces/aether",
     "license": ["AGPL-3.0-only", "proprietary"],
     "type": "project",
     "support":
     {
-        "docs": "https://aethershell.readthedocs.io/en/latest",
-        "email": "os@nxsysts.com",
+        "docs": "https://man.aether.sh",
+        "email": "onx@nxsysts.com",
         "chat": "https://onx.zulipchat.com",
         "issues": "https://nxsys.assembla.com/spaces/aether/tickets",
         "forum": "https://nxsys.assembla.com/spaces/aether/messages",
-        "wiki": "http://code.fnetit.net/projects/aether/wiki",
+        "wiki": "https://nxsys.assembla.com/spaces/aether/wiki",
         "source": "https://nxsys.assembla.com/code/onx/subversion-3/repo",
         "rss": "https://nxsys.assembla.com/spaces/aether/stream.rss"
      },
