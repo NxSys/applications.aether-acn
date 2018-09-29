@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<!-- ===========================================================================
+# WebConsole.twig
+# $Id$
+#
+# Description:
+#  Template file for displaying the console
+# Meta Tags:
+# @package WACC
+# @subpackage Templates
+# @author Chris R. Feamster <cfeamster@f2developments.com>
+# @author $LastChangedBy$
+#
+# @version $Revision$
+# @copyright Copyright 2013 F2 Developments, Inc.
+# @license http://f2dev.com/prjs/wacc/license.html
+# Please see the license.txt file or the url above for full copyright and license information.
+============================================================================ -->
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>{{site_name}}</title>
+	<base href="webroot" />
+
+	<!-- <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css"> -->
+	<link rel="stylesheet" href="css/fullpage.css">
+	<link rel="stylesheet" href="css/wacc.css">
+	<link rel="icon" type="image/png" href="images/favicon.png">
+
+	<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+	<script type="text/javascript" src="js/WACCClient.js"></script>
+	<script type="text/javascript">
+		var o_Console = new WACCClient('index.php/docmd', false, '', 'WACC}');
+		o_Console.s_CurrentCommand='motd';o_Console.f_ProcessCommand();
+		o_Console.s_CurrentCommand='list --raw';o_Console.f_ProcessCommand();
+		//o_Console.s_CurrentCommand='login -h';o_Console.f_ProcessCommand();
+	</script>
+</head>
+
+<body>
+{{site_name}} / {{wacc_ver}} / {{ app.request.host }}
+</body>
+
+</html>

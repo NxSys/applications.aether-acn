@@ -1,0 +1,7 @@
+body
+{
+	font-family: "Terminal", "Lucida Console", monospace;
+	font-size: small;
+	color: #0080ff; /* The same light blue in the icon */
+	background-color: #090909 ; /* dark grey */
+}
