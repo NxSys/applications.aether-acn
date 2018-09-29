@@ -1,5 +1,5 @@
 {
-    "name": "nxsys/application.aether",
+    "name": "nxsys/application.aether-acn",
     "description": "Aether.sh: Cloud Console",
     "keywords": ["distributed admin tool", "webshell", "webterminal", "shell", "terminal"],
     "homepage": "http://nxsys.org/spaces/aether",
@@ -38,15 +38,12 @@
         "php": "^7.2",
         "ext-openssl": "^7.2",
         "ext-pthreads": "~3.0",
-        "nxsys/framework.aether": "*@dev"
+		"nxsys/toolkits.aether-sdk": "~0.1"
     },
     "require-dev":
     {
 
     },
     "minimum-stability": "dev",
-    "prefer-stable": true,
-    "repositories": [
-        {"type": "path", "url": "./src/Aether"}
-    ]
+    "prefer-stable": true
 }
