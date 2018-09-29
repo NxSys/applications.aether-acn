@@ -1,0 +1,31 @@
+Aether.Sh - Cloud Console
+Copyright (c) 2016 Nexus Systems, Inc. Any rights not expressly granted herein are reserved.
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/agpl.html>.
+
+Named components copyrighted and used under license from other parties as indicated below:
+Symfony Components [Console, Process, Configuration, et al.]
+    Copyright (c) 2010-2018 Fabien Potencier
+
+Questions or concerns can be directed toward any of the following channels:
+Web:
+    http://www.nexussystemsinc.com/corp/contact-us.html
+Email:
+    os@nexussystemsinc.com
+Post:
+   Open Source Initiatives
+    c/o Nexus Systems, Inc.
+    630 North 16th St, 3rd Floor
+    Philadelphia PA 19130-3421
+    USA

@@ -1,0 +1,52 @@
+{
+    "name": "nxsys/application.aether",
+    "description": "Aether.Sh: Cloud Console",
+    "keywords": ["distributed admin tool", "webshell", "webterminal", "shell", "terminal"],
+    "homepage": "http://nxsys.org/spaces/aether",
+    "license": ["AGPL-3.0-only", "proprietary"],
+    "type": "project",
+    "support":
+    {
+        "docs": "https://aethershell.readthedocs.io/en/latest",
+        "email": "os@nxsysts.com",
+        "chat": "https://onx.zulipchat.com",
+        "issues": "https://nxsys.assembla.com/spaces/aether/tickets",
+        "forum": "https://nxsys.assembla.com/spaces/aether/messages",
+        "wiki": "http://code.fnetit.net/projects/aether/wiki",
+        "source": "https://nxsys.assembla.com/code/onx/subversion-3/repo",
+        "rss": "https://nxsys.assembla.com/spaces/aether/stream.rss"
+     },
+    "authors":
+    [
+        {
+            "name": "Nexus Systems, Inc.",
+            "homepage": "https://nexussystemsinc.com/about/foss-commitment.html",
+            "email": "onx@nxsysts.com",
+            "role": "Dev Team"
+        }
+    ],
+    "config":
+    {
+        "optimize-autoloader": true
+    },
+    "autoload":
+    {
+        "psr-4": { "": "src/" }
+    },
+    "require":
+    {
+        "php": "^7.2",
+        "ext-openssl": "^7.2",
+        "ext-pthreads": "~3.0",
+        "nxsys/framework.aether": "*@dev"
+    },
+    "require-dev":
+    {
+
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "repositories": [
+        {"type": "path", "url": "./src/Aether"}
+    ]
+}

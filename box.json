@@ -1,0 +1,26 @@
+{
+	"algorithm":	"SHA512",
+	"banner-file":	"banner.txt",
+	"blacklist":	["libs", "etc"],
+	"compression":	"GZ",
+	"directories":	["src", "vendors"],
+	"directories-bin": ["res"],
+	"extract": true,
+	"files":
+	[
+		"ConsoleMain.php",
+		"WebMain.php"
+	],
+	"intercept": true,
+	"main": "executive/aesh.php",
+	"map": ?,
+	"metadata": ?,
+	"mimetypes": ?,
+	"mung": ?,
+	"not-found": ?,
+	"output": ?,
+	"replacements": ?,
+	"shebang": ?,
+	"stub": ?,
+	"web": ?
+}

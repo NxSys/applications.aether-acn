@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+	<imports>
+        <import resource="services.xml" />
+    </imports>
+    <parameters>
+		<!-- classes -->
+		<parameter key="aether.foo.class">NxSys\Frameworks\Aether\ClassSvc</parameter>
+
+		<!-- parameters -->
+		<parameter key="aether1.param">rcespace</parameter>
+		<parameter key="aether.param">dev_active</parameter>
+	</parameters>
+    <services>
+		<service id="service.aether.test" class="StdClass">
+			<argument type="service" id="service_container"/>
+			<tag name="monolog.logger" channel="ClientCreatorSvc" />
+		</service>
+
+	</services>
+</container>

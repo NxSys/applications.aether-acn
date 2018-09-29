@@ -1,0 +1,66 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+	<!--this is loaded after the ini file(s) are-->
+	<parameters>
+		<!-- classes -->
+		<parameter key="Aether.foo.class">NxSys\Frameworks\Aether\ClassSvc</parameter>
+		<parameter key="Aether.webcontroller.class">NxSys\Frameworks\Aether\Terminal\Web\DefaultWebController</parameter>
+
+		<!-- third party classes -->
+		<parameter key="Aether.webprocessor.class">Silex\Application</parameter>
+		<parameter key="symfony-console-application.class">Symfony\Component\Console\Application</parameter>
+
+		<!-- parameters -->
+		<parameter key="Aether.terminal.prompt">Aether</parameter>
+		<parameter key="Aether.terminal.prompt-terminator">}</parameter>
+	</parameters>
+
+	<services>
+		<service id="Aether.test" class="%Aether.foo.class%">
+		</service>
+		<service id="Aether.logger" class="StdClass">
+		</service>
+
+		<!--Routes for silex-->
+		<service id="Aether.webprocessor" class="%Aether.webprocessor.class%">
+			<call method="get">
+				<argument>/</argument>
+				 <argument type="collection">
+					<argument type="service" id="Aether.webcontroller"/>
+					<argument>getWebConsole</argument>
+				 </argument>
+			</call>
+			<call method="get">
+				<argument>/docmd/{s_SID}/{s_Command}</argument>
+				 <argument type="collection">
+					<argument type="service" id="Aether.webcontroller"/>
+					<argument>processCommand</argument>
+				 </argument>
+			</call>
+			<call method="post">
+				<argument>/docmd</argument>
+				 <argument type="collection">
+					<argument type="service" id="Aether.webcontroller"/>
+					<argument>processPostedCommand</argument>
+				 </argument>
+			</call>
+			<call method="get">
+				<argument>/system/loadTemplate/{sTemplateName}</argument>
+				 <argument type="collection">
+					<argument type="service" id="Aether.webcontroller"/>
+					<argument>getSysUiTemplate</argument>
+				 </argument>
+			</call>
+		</service>
+
+		<service id="Aether.webcontroller" class="%Aether.webcontroller.class%">
+			<argument type="service" id="Aether.webprocessor"/>
+		</service>
+
+		<service id="_container" class="StdClass">
+			<property name="DIC" type="service" id="contianer" />
+		</service>
+	</services>
+</container>

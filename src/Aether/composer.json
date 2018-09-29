@@ -1,0 +1,43 @@
+{
+    "name": "nxsys/framework.aether",
+    "description": "Aether's Framework",
+    "license": ["AGPL-3.0-only", "proprietary"],
+    "type": "library",
+    "autoload":
+    {
+        "psr-4": { "NxSys\\Frameworks\\Aether\\": "." }
+    },
+    "require":
+    {
+        "php":                          ">=7.2",
+        "composer/composer":            "~1.6",
+        "league/tactician":             "^1.0",
+        "monolog/monolog":              "~1.1",
+        "nette/neon":                   "~2.3",
+        "nxsys/core":                   "*",
+        "nxsys/library.bridges-sfconsole": "dev-master",
+        "phpseclib/phpseclib":          "~0.3",
+        "pimple/pimple":                "^3.0",
+        "react/zmq":                    "^0.3.0",
+        "sensiolabs/ansi-to-html":      "~1.1",
+        "symfony/config":               "~3.0",
+        "symfony/console":              "~3.0",
+        "symfony/dependency-injection": "~3.0",
+        "symfony/process":              "~3.0",
+        "symfony/security-acl":         "~3.0",
+        "symfony/security-core":        "~3.0"
+    },
+    "suggests":
+    {
+        "ext-mcrypt": "*",
+        "ext-hrtime": ">=0.6.0"
+    },
+    "authors":
+    [
+        {
+            "name": "Nexus Systems, Inc.",
+            "email": "code@nxsysts.com"
+        }
+    ],
+    "minimum-stability": "stable"
+}

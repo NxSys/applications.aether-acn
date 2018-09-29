@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!-- ===========================================================================
+# WebConsole.twig
+# $Id$
+#
+# Description:
+#  Template file for displaying the console
+# Meta Tags:
+# @package WACC
+# @subpackage Templates
+# @author Chris R. Feamster <cfeamster@f2developments.com>
+# @author $LastChangedBy$
+#
+# @version $Revision$
+# @copyright Copyright 2013-2015 Nexus Systems, Inc.
+# @license https://nxsys.org/spaces/wacc/wiki/License
+# Please see the license.txt file or the url above for full copyright and license information.
+============================================================================ -->
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>{{site_name}}</title>
+	<base href="webroot" />
+
+	<!-- <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css"> -->
+	<link rel="stylesheet" href="css/fullpage.css">
+	<link rel="stylesheet" href="css/wacc.css">
+	<link rel="icon" type="image/png" href="images/favicon.png">
+
+	<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+	<script type="text/javascript" src="js/WACCTerminal.js"></script>
+	<script type="text/javascript">
+		var o_Terminal = new WACCTerminal('index.php/docmd');
+		$(document).on('WACCTerminal_Ready', function(){
+			o_Terminal.processCommand('motd');
+			o_Terminal.processCommand('list --raw');
+			//o_Terminal.s_CurrentCommand='login -h';o_Terminal.processCommand();
+		});
+	</script>
+</head>
+
+<body>
+{{site_name}} / {{wacc_ver}} / {{ app.request.host }}
+<div id="wacc-terminal"></div>
+</body>
+
+</html>
