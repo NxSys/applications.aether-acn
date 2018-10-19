@@ -57,6 +57,7 @@ define('APP_ETC_DIR', getcwd().DIRECTORY_SEPARATOR.'etc');
 
 //now you can use a bare autoloader, unless we're in a PHAR, then we need a shim...
 set_include_path( APP_SOURCE_DIR.PATH_SEPARATOR
+				 	.APP_LIB_DIR.PATH_SEPARATOR
 				 .APP_VENDOR_DIR.PATH_SEPARATOR
 				 .get_include_path());
 spl_autoload_register();
