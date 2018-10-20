@@ -31,20 +31,29 @@
     },
     "autoload":
     {
-        "psr-4": { "": "src/" },
-        "files": ["phar://libs/AetherSDK.phar/vendor/composer/autoload_classmap.php"]
+        "psr-4": { "NxSys\\Applications\\Aether\\ACN\\": "src/ACN" }
     },
     "require":
     {
         "php": "^7.2",
+        "ext-hrtime": ">=0.6.0",
         "ext-openssl": "^7.2",
+        "ext-sodium": "*",
         "ext-pthreads": "~3.0",
-		"nxsys/toolkits.aether-sdk": "~0.1"
+        "nxsys/toolkits.aether-sdk": "trunk"
     },
     "require-dev":
     {
 
-    },
+	},
+	"repositories":
+	[
+		{
+            "type": "path",
+			"url": "../toolkits.aether-sdk",
+			"options": {"symlink":true }
+		}
+	],
     "minimum-stability": "dev",
     "prefer-stable": true
 }

@@ -29,22 +29,15 @@ const PHAR_INSTALLED=FALSE;
 ////////////////////////////////////////////////////////////////////////////////
 
 //Domestic Namespace
-use NxSys\Frameworks\Aether,
-	NxSys\Library\Bridges\sfConsole\ToolApplication;
+use NxSys\Applications\Aether,
+	NxSys\Toolkits\Aether\SDK\Core;
 
 //Framework Namespace
 use Symfony\Component\Console as sfConsole;
+use NxSys\Library\Bridges\sfConsole\ToolApplication;
 use NxSys\Core\ExtensibleSystemClasses as CoreEsc;
 
 //start
-if (PHAR_INSTALLED)
-{
-	require_once 'phar://Aether-ACN.phar/src/Common.php';
-} 
-else
-{
-	require_once '../src/Common.php';
-}
 
 if (!defined('PHAR_NAME'))
 {
@@ -54,14 +47,25 @@ if (!defined('PHAR_NAME'))
 function ConsoleMain($argc, $argv): integer
 {
 	//our working dir is ./executive
-	#$sOldDir=chdir(dirname(__FILE__)); //jump from out of the webroot
+	$sOldDir=chdir(dirname(__FILE__)); //jump from out of the webroot
 
-	//make sure we can find\load the SDK...
+	if (PHAR_INSTALLED)
+	{
+		require_once 'phar://Aether-ACN.phar/src/Common.php';
+	} 
+	else
+	{
+		require_once '../src/Common.php';
+	}
 
 	//setup app?
-	$oApp=new Aether\Utility\InvocationWrapper\RceCommand;
+	$oACNMain=new Aether\ACN\ACNMain();
+	$oApp=new Core\Boot\Executor($oACNMain, $oACNMain->getShortName());
 
 	// ready to run
 	$o_Application=new ToolApplication($oApp, APP_NAME, APP_VERSION, basename(__FILE__, '.php'));
-	return $o_Application->run(new sfConsole\Input\ArgvInput($argv));
+	$ret=$o_Application->run(new sfConsole\Input\ArgvInput($argv));
+
+	chdir($sOldDir); //restore cd
+	return $ret;
 }
