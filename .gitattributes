@@ -9,7 +9,7 @@
 /composer.json -text
 executive/acn.php -text
 executive/aesh.php -text
-executive/config.sample.ini -text
+executive/config/config.sample.ini -text
 executive/config/services/acn.xml -text
 executive/config/services/common.xml -text
 executive/config/services/rce.xml -text
@@ -21,6 +21,7 @@ executive/wacc-cs.db -text
 executive/wacc-shell.php -text
 res/install.php -text
 /sonar-project.properties -text
+src/ACN/ACNMain.php -text
 src/Aether/Execution/Agent/BaseAgent.php -text
 src/Aether/Execution/Agent/IAgent.php -text
 src/Aether/Execution/Job/Async.php -text

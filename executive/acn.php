@@ -47,7 +47,7 @@ if (!defined('PHAR_NAME'))
 function ConsoleMain($argc, $argv): integer
 {
 	//our working dir is ./executive
-	$sOldDir=chdir(dirname(__FILE__)); //jump from out of the webroot
+	$sOldDir=chdir(dirname(__FILE__)); //jump out from elsewhere
 
 	if (PHAR_INSTALLED)
 	{
