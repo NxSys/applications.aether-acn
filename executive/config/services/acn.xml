@@ -14,6 +14,18 @@
 		<parameter key="aether.param">dev_active</parameter>
 	</parameters>
     <services>
+		<service id="acn" class="StdClass">
+			<argument type="service" id="service_container"/>
+			<tag name="monolog.logger" channel="ClientCreatorSvc" />
+		</service>
+		<service id="service.aether.test" class="StdClass">
+			<argument type="service" id="service_container"/>
+			<tag name="monolog.logger" channel="ClientCreatorSvc" />
+		</service>
+		<service id="service.aether.test" class="StdClass">
+			<argument type="service" id="service_container"/>
+			<tag name="monolog.logger" channel="ClientCreatorSvc" />
+		</service>
 		<service id="service.aether.test" class="StdClass">
 			<argument type="service" id="service_container"/>
 			<tag name="monolog.logger" channel="ClientCreatorSvc" />

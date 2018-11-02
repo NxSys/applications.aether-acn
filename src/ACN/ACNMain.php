@@ -31,6 +31,7 @@ use NxSys\Toolkits\Aether\SDK\Core;
 //Framework Namespaces
 use Symfony\Component\Console as sfConsole;
 use NxSys\Core\ExtensibleSystemClasses as CoreEsc;
+use Pimple\Container;
 
 
 class ACNMain extends Core\Boot\Main
@@ -60,14 +61,31 @@ class ACNMain extends Core\Boot\Main
 
 	public function start(): int
 	{
-		
+
 		$this->log("Started");
 		$this->log("//init listeners");
-		$this->log("//init handler");		
+		$hAcnCommsFiber=Container::getDependency('acn.svc.fiber.AcnComms');
+		/**
+		 * @var Core\Execution\Job\Fiber
+		 */
+		$hTermCommsFiber=Container::getDependency('acn.svc.fiber.TermComms');
+		$this->log("//init handler");
 		$this->log("//start listener threads (acn[2])");
+
+		$hTermCommsFiber->start();
+
 		$a=0;
 		do
 		{
+			//---housekeeping---
+			//are threads up?
+
+			// $hTermCommsFiber->
+
+			//---message passing---
+			//internal?
+
+			//error handling/recovery
 			$this->log('Heelo wooorrllllddd!!1111');
 			$a++;
 			# code...
@@ -85,7 +103,7 @@ class ACNMain extends Core\Boot\Main
 		# code...
 		echo 'foooozzzzz....';
 		throw new \Exception("Error Processing Request", 1);
-		
+
 	}
 }
 

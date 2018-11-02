@@ -63,4 +63,10 @@ set_include_path( APP_SOURCE_DIR.PATH_SEPARATOR
 spl_autoload_register();
 
 //classmaps and include/require bloc's should be here
-require_once APP_VENDOR_DIR.DIRECTORY_SEPARATOR.'autoload.php';
+const APP_AUTOLOADER_FILE = APP_VENDOR_DIR.DIRECTORY_SEPARATOR.'autoload.php';
+is_readable(APP_AUTOLOADER_FILE)
+	or
+	die(sprintf("APP_AUTOLOADER_FILE is not accessable. Unable to proceed. Please check permissions or reinstall.\n\t%s\n",
+				APP_AUTOLOADER_FILE));
+
+require_once APP_AUTOLOADER_FILE;

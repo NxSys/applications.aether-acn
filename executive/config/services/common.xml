@@ -20,7 +20,10 @@
 	<services>
 		<service id="Aether.test" class="%Aether.foo.class%">
 		</service>
-		<service id="Aether.logger" class="StdClass">
+
+		<service id="sys.logger" class="StdClass">
+			<argument type="service" id="service_container"/>
+			<tag name="monolog.logger" channel="ClientCreatorSvc" />
 		</service>
 
 		<!--Routes for silex-->

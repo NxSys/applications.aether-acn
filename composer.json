@@ -36,10 +36,10 @@
     "require":
     {
         "php": "^7.2",
-        "ext-hrtime": ">=0.6.0",
         "ext-openssl": "^7.2",
         "ext-sodium": "*",
-        "ext-pthreads": "~3.0",
+		"ext-pthreads": "~3.0",
+		"cboden/ratchet": "~0.4",
         "nxsys/toolkits.aether-sdk": "trunk"
     },
     "require-dev":
