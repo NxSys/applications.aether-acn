@@ -27,11 +27,11 @@ namespace NxSys\Applications\Aether\ACN;
 //Domestic Namespaces
 use NxSys\Applications\Aether;
 use NxSys\Toolkits\Aether\SDK\Core;
+use NxSys\Toolkits\Aether\SDK\Core\Boot\Container;
 
 //Framework Namespaces
 use Symfony\Component\Console as sfConsole;
 use NxSys\Core\ExtensibleSystemClasses as CoreEsc;
-use Pimple\Container;
 
 
 class ACNMain extends Core\Boot\Main
@@ -64,21 +64,25 @@ class ACNMain extends Core\Boot\Main
 
 		$this->log("Started");
 		$this->log("//init listeners");
-		$hAcnCommsFiber=Container::getDependency('acn.svc.fiber.AcnComms');
+		// $hAcnCommsFiber=Container::getDependency('acn.svc.fiber.AcnComms');
 		/**
 		 * @var Core\Execution\Job\Fiber
 		 */
 		$hTermCommsFiber=Container::getDependency('acn.svc.fiber.TermComms');
+		$oListener = Container::getDependency('acn.svc.TermComms.listener');
+		$hTermCommsFiber->setListener($oListener);
+		$hTermCommsFiber->start(PTHREADS_INHERIT_CONSTANTS);
 		$this->log("//init handler");
 		$this->log("//start listener threads (acn[2])");
 
-		$hTermCommsFiber->start();
+		// $hTermCommsFiber->start();
+		// $hAcnCommsFiber->start();
 
 		$a=0;
 		do
 		{
 			//---housekeeping---
-			//are threads up?
+			//are threads up? & healthy
 
 			// $hTermCommsFiber->
 
@@ -86,11 +90,11 @@ class ACNMain extends Core\Boot\Main
 			//internal?
 
 			//error handling/recovery
-			$this->log('Heelo wooorrllllddd!!1111');
+			sleep(1);
 			$a++;
 			# code...
 		}
-		while ($a <= 10);
+		while ($a <= 120);
 		//clean up
 		$this->log("//Clean up");
 		$this->log("Stopping");
@@ -98,12 +102,27 @@ class ACNMain extends Core\Boot\Main
 	}
 
 
-	public function proccessEvent()
+	public function handleEvent(Core\Boot\Event\Event $oEv)
 	{
 		# code...
 		echo 'foooozzzzz....';
 		throw new \Exception("Error Processing Request", 1);
 
+	}
+
+	public static function getChannels(): array
+	{
+		return [];
+	}
+
+	public static function getEvents(): array
+	{
+		return [];
+	}
+
+	public static function getPriority(): int
+	{
+		return -1;
 	}
 }
 

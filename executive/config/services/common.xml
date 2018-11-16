@@ -5,7 +5,11 @@
 	<!--this is loaded after the ini file(s) are-->
 	<parameters>
 		<!-- classes -->
-		<parameter key="Aether.foo.class">NxSys\Frameworks\Aether\ClassSvc</parameter>
+		<parameter key="acn.svc.ListenerHostFiber.fiber.class">NxSys\Toolkits\Aether\SDK\Core\Comms\ListenerHostFiber</parameter>
+		<parameter key="acn.svc.TermComms.listener.class">NxSys\Applications\Aether\ACN\Listeners\RatchetCommsWebsocketListener</parameter>
+		<parameter key="acn.svc.TermComms.handler.class">NxSys\Applications\Aether\ACN\Listeners\RatchetWampHandler</parameter>
+		<parameter key="acn.svc.AcnComms.fiber.class">NxSys\Frameworks\Aether\ClassSvc</parameter>
+		<parameter key="Aether.boot.eventmanager.class">NxSys\Toolkits\Aether\SDK\Core\Boot\Event\EventManager</parameter>
 		<parameter key="Aether.webcontroller.class">NxSys\Frameworks\Aether\Terminal\Web\DefaultWebController</parameter>
 
 		<!-- third party classes -->
@@ -13,13 +17,29 @@
 		<parameter key="symfony-console-application.class">Symfony\Component\Console\Application</parameter>
 
 		<!-- parameters -->
-		<parameter key="Aether.terminal.prompt">Aether</parameter>
-		<parameter key="Aether.terminal.prompt-terminator">}</parameter>
+		<parameter key="acn.cfg.ws.path">shsock</parameter>
+		<parameter key="acn.cfg.ws.port">9090</parameter>
+
+
+		<parameter key="aether.terminal.prompt">Aether</parameter>
+		<parameter key="aether.terminal.prompt-terminator">}</parameter>
 	</parameters>
 
 	<services>
-		<service id="Aether.test" class="%Aether.foo.class%">
+		<service id="acn.svc.fiber.TermComms" class="%acn.svc.ListenerHostFiber.fiber.class%">
+			<!-- <call method="start">
+				<!- <argument>1118481</argument> <!- PTHREADS_INHERIT_ALL ->
+				<argument>16</argument> <!- PTHREADS_INHERIT_CONSTANTS ->
+			</call>
+            <call method="setListener">
+                <argument type="service" id="acn.svc.TermComms.listener" />
+            </call> -->
 		</service>
+
+		<service id="acn.svc.TermComms.listener" class="%acn.svc.TermComms.listener.class%">
+		</service>
+		<!-- <service id="acn.svc.TermComms.handler" class="%acn.svc.TermComms.handler.class%">
+		</service> -->
 
 		<service id="sys.logger" class="StdClass">
 			<argument type="service" id="service_container"/>
@@ -60,6 +80,9 @@
 
 		<service id="Aether.webcontroller" class="%Aether.webcontroller.class%">
 			<argument type="service" id="Aether.webprocessor"/>
+		</service>
+
+		<service id="Aether.boot.eventmanager" class="%Aether.boot.eventmanager.class%">
 		</service>
 
 		<service id="_container" class="StdClass">

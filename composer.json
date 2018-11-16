@@ -40,7 +40,8 @@
         "ext-sodium": "*",
 		"ext-pthreads": "~3.0",
 		"cboden/ratchet": "~0.4",
-        "nxsys/toolkits.aether-sdk": "trunk"
+        "nxsys/toolkits.aether-sdk": "trunk",
+        "voryx/thruway": "^0.5.3"
     },
     "require-dev":
     {

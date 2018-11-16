@@ -25,6 +25,7 @@ src/ACN/ACNMain.php -text
 src/ACN/ListenerFiber.php -text
 src/ACN/Listeners/RatchetCommsWebsocketListener.php -text
 src/ACN/Listeners/RatchetWampHandler.php -text
+src/ACN/Listeners/ThruwayCommsWebsocketListener.php -text
 src/Aether/Execution/Agent/BaseAgent.php -text
 src/Aether/Execution/Agent/IAgent.php -text
 src/Aether/Execution/Job/Async.php -text
