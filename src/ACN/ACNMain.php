@@ -66,18 +66,24 @@ class ACNMain extends Core\Boot\Main
 		$this->log("//init listeners");
 		// $hAcnCommsFiber=Container::getDependency('acn.svc.fiber.AcnComms');
 		/**
-		 * @var Core\Execution\Job\Fiber
+		 * @var NxSys\Toolkits\Aether\SDK\Core\Execution\Job\Fiber
 		 */
 		$hTermCommsFiber=Container::getDependency('acn.svc.fiber.TermComms');
 		$oListener = Container::getDependency('acn.svc.TermComms.listener');
-		$hTermCommsFiber->setListener($oListener);
+		
 		$hTermCommsFiber->start(PTHREADS_INHERIT_CONSTANTS);
+		$hTermCommsFiber->setListener($oListener);
+
 		$this->log("//init handler");
 		$this->log("//start listener threads (acn[2])");
 
 		// $hTermCommsFiber->start();
 		// $hAcnCommsFiber->start();
+		$oEventMgr=new Core\Boot\Event\EventManager;
+		$hTermCommsFiber->setEventQueue($oEventMgr->getQueue());
+		$oEventMgr->addListener($hTermCommsFiber);
 
+		$oEventMgr->addEvent(new Core\Boot\Event\Event("sys", "start"));
 		$a=0;
 		do
 		{
@@ -90,14 +96,18 @@ class ACNMain extends Core\Boot\Main
 			//internal?
 
 			//error handling/recovery
+			$oEventMgr->processEvent();
 			sleep(1);
 			$a++;
 			# code...
 		}
-		while ($a <= 120);
+		while ($a <= 60);
 		//clean up
 		$this->log("//Clean up");
 		$this->log("Stopping");
+		$hTermCommsFiber->halt();
+		$hTermCommsFiber->join();
+		// sleep(5);
 		return 0;
 	}
 
@@ -110,17 +120,17 @@ class ACNMain extends Core\Boot\Main
 
 	}
 
-	public static function getChannels(): array
+	public function getChannels(): array
 	{
 		return [];
 	}
 
-	public static function getEvents(): array
+	public function getEvents(): array
 	{
 		return [];
 	}
 
-	public static function getPriority(): int
+	public function getPriority(): int
 	{
 		return -1;
 	}

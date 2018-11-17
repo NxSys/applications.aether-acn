@@ -6,7 +6,7 @@
 	<parameters>
 		<!-- classes -->
 		<parameter key="acn.svc.ListenerHostFiber.fiber.class">NxSys\Toolkits\Aether\SDK\Core\Comms\ListenerHostFiber</parameter>
-		<parameter key="acn.svc.TermComms.listener.class">NxSys\Applications\Aether\ACN\Listeners\RatchetCommsWebsocketListener</parameter>
+		<parameter key="acn.svc.TermComms.listener.class">NxSys\Applications\Aether\ACN\Listeners\ThruwayCommsWebsocketListener</parameter>
 		<parameter key="acn.svc.TermComms.handler.class">NxSys\Applications\Aether\ACN\Listeners\RatchetWampHandler</parameter>
 		<parameter key="acn.svc.AcnComms.fiber.class">NxSys\Frameworks\Aether\ClassSvc</parameter>
 		<parameter key="Aether.boot.eventmanager.class">NxSys\Toolkits\Aether\SDK\Core\Boot\Event\EventManager</parameter>
@@ -20,23 +20,25 @@
 		<parameter key="acn.cfg.ws.path">shsock</parameter>
 		<parameter key="acn.cfg.ws.port">9090</parameter>
 
+		<parameter key="acn.cfg.acn.port">8354</parameter>
 
 		<parameter key="aether.terminal.prompt">Aether</parameter>
 		<parameter key="aether.terminal.prompt-terminator">}</parameter>
 	</parameters>
 
 	<services>
-		<service id="acn.svc.fiber.TermComms" class="%acn.svc.ListenerHostFiber.fiber.class%">
+		<service id="acn.svc.fiber.TermComms" class="%acn.svc.ListenerHostFiber.fiber.class%"
+		shared="false">
 			<!-- <call method="start">
 				<!- <argument>1118481</argument> <!- PTHREADS_INHERIT_ALL ->
 				<argument>16</argument> <!- PTHREADS_INHERIT_CONSTANTS ->
-			</call>
-            <call method="setListener">
+			</call>  -->
+            <!--call method="setListener">
                 <argument type="service" id="acn.svc.TermComms.listener" />
-            </call> -->
+            </call-->
 		</service>
 
-		<service id="acn.svc.TermComms.listener" class="%acn.svc.TermComms.listener.class%">
+		<service id="acn.svc.TermComms.listener" class="%acn.svc.TermComms.listener.class%" shared="false">
 		</service>
 		<!-- <service id="acn.svc.TermComms.handler" class="%acn.svc.TermComms.handler.class%">
 		</service> -->

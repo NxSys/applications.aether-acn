@@ -8,13 +8,16 @@ use NxSys\Toolkits\Aether\SDK\Core\Boot\Container;
 
 use NxSys\Applications\Aether\ACN\Listeners\RatchetWampHandler;
 
-use Thruway;
+use Ratchet;
 use React;
-
-use Thruway\Transport\RatchetTransport;
+use Thread;
+use Thruway;
+use React\Tests\Dns\Query\RetryExecutorTest;
 
 class ThruwayCommsWebsocketListener extends Core\Comms\BaseListener
 {
+	public $oThreadContext;
+
 	public $hSockServer;
 	/** @var string $sHost Hostheader */
 	protected $sHost = null;
@@ -35,28 +38,38 @@ class ThruwayCommsWebsocketListener extends Core\Comms\BaseListener
 		// debug_print_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
 
 		$sWsPath='wsapi';
-		$oHandler=new RatchetWampHandler;
+		$oHandler=new ThruwayWampClient("Test");
+		$oHandler->setThreadContext($this->getThreadContext());
 
-		$loop=React\EventLoop\Factory::create();
-		var_dump("Making timer");
-		// $loop->addPeriodicTimer(1, [$this,'loopMaintenance']);
-		$this->oRatchetSockLoop=$loop;
-		$server = new Ratchet\App('10.100.0.6', 8354, '0.0.0.0', $loop);
+		// $oHandler->on('open', [$oHandler, 'onSessionStart']);
+
+		$router = new Thruway\Peer\Router;
+		$this->oThruwayRouter=$router;
+		$transportProvider = new RatchetWampHandler("0.0.0.0", 9090);
+		$router->addTransportProvider($transportProvider);
+		$router->addInternalClient($oHandler);
+
 		
-		$this->hSockServer=$server;
-		#@todo support mounting of multiple routes??
-		$server->route('/'.$sWsPath, $oHandler);
-		$server->run();
-	}
+		$realmManager = new Thruway\RealmManager();
+		$router->registerModule($realmManager);
+		$router->setRealmManager($realmManager);
+		$router->getLoop()->addPeriodicTimer(1, [$this,'loopMaintenance']);
 
-	public function setEventManager(Event\EventManager $oEventManager)
-	{
-		$this->oEventManager = $oEventManager;
+		$realm = new Thruway\Realm("Test");
+		$realmManager->addRealm($realm);
+
+		// $oHandler->start(true);
+		$router->start(false);
+		$router->getLoop()->run();
+		printf('Loop has returned. Listener is terminating...');
+		return;
 	}
 
 	public function setBinding(string $sHost, string $sInterface, int $iPort)
 	{
-		# code...
+		$this->sHost=$sHost;
+		$this->sInterface=$sInterface;
+		$this->iPort=$iPort;
 	}
 
 	public function setWsPath(string $sPath)
@@ -64,22 +77,48 @@ class ThruwayCommsWebsocketListener extends Core\Comms\BaseListener
 		# code...
 	}
 
+
 	public function loopMaintenance()
 	{
-		var_dump("Loop Maintenance");
-		$sStatus=$this->oThreadContext->fiberSignal();
+		// var_dump("Loop Maintenance");
+		$sStatus=$this->getThreadContext()->fiberSignal();
+		// printf(">>>CHECKPOINT %s::%s:%s<<<", __CLASS__, __FUNCTION__, __LINE__);
+		// var_dump($sStatus);
 		if($sStatus)
 		{
-			$this->oRatchetSockLoop->end();
+		// printf(">>>CHECKPOINT %s::%s:%s<<<", __CLASS__, __FUNCTION__, __LINE__);
+			$this->oThruwayRouter->getLoop()->stop();
 			echo "AHHHHHHHHHHHHHHHHHHHHHHHHH";
+			exit;
+			// printf(">>>CHECKPOINT %s::%s:%s<<<", __CLASS__, __FUNCTION__, __LINE__);
 		}
+
+		//check for ext events
+		$oEvent = $this->getThreadContext()->getInEvent();
+
+		if ($oEvent !== null)
+		{
+			printf("%s saw [%s]%s event.\n", __FUNCTION__, $oEvent->getChannel(), $oEvent->getEvent());
+			// printf(">>>CHECKPOINT %s::%s:%s<<<", __CLASS__, __FUNCTION__, __LINE__);
+			//var_dump($oEvent);
+		}
+
+		
+		//send events to thruway
+
 	}
 
 
 	public function setThreadContext($oThread)
 	{
-		var_dump(gettype($oThread));
+		// printf(">>>CHECKPOINT %s::%s:%s<<<", __CLASS__, __FUNCTION__, __LINE__);
+		// var_dump(gettype($oThread));
 		$this->oThreadContext = $oThread;
+	}
+
+	protected function getThreadContext(): Thread
+	{
+		return $this->oThreadContext;
 	}
 	public function registerLoopHandler(Callable $hHandler){}
 }
