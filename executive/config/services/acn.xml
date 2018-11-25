@@ -3,33 +3,42 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 	<imports>
-        <import resource="common.xml" />
-    </imports>
-    <parameters>
+		<import resource="common.xml" />
+		<import resource="acn-events.xml" />
+	</imports>
+	<parameters>
 		<!-- classes -->
-		<parameter key="aether.foo.class">NxSys\Frameworks\Aether\ClassSvc</parameter>
+		<parameter key="acn.svc.ListenerHostFiber.fiber.class">NxSys\Toolkits\Aether\SDK\Core\Comms\ListenerHostFiber</parameter>
+		<parameter key="acn.svc.TermComms.listener.class">NxSys\Applications\Aether\ACN\Listeners\ThruwayCommsWebsocketListener</parameter>
+		<parameter key="acn.svc.TermComms.handler.class">NxSys\Applications\Aether\ACN\Listeners\RatchetWampHandler</parameter>
+
+		<!-- third party classes -->
+		<parameter key="symfony-console-application.class">Symfony\Component\Console\Application</parameter>
+
+		<!-- parameters -->
+		<parameter key="acn.cfg.ws.path">shsock</parameter>
+		<parameter key="acn.cfg.ws.port">9090</parameter>
 
 		<!-- parameters -->
 		<parameter key="aether1.param">userspace</parameter>
 		<parameter key="aether.param">dev_active</parameter>
 	</parameters>
-    <services>
-		<service id="acn" class="StdClass">
-			<argument type="service" id="service_container"/>
-			<tag name="monolog.logger" channel="ClientCreatorSvc" />
+	<services>
+		<service id="acn.svc.fiber.TermComms" class="%acn.svc.ListenerHostFiber.fiber.class%"
+		shared="false">
+			<!-- <call method="start">
+				<!- <argument>1118481</argument> <!- PTHREADS_INHERIT_ALL ->
+				<argument>16</argument> <!- PTHREADS_INHERIT_CONSTANTS ->
+			</call>  -->
+            <!--call method="setListener">
+                <argument type="service" id="acn.svc.TermComms.listener" />
+            </call-->
 		</service>
-		<service id="service.aether.test" class="StdClass">
-			<argument type="service" id="service_container"/>
-			<tag name="monolog.logger" channel="ClientCreatorSvc" />
+
+		<service id="acn.svc.TermComms.listener" class="%acn.svc.TermComms.listener.class%" shared="false">
 		</service>
-		<service id="service.aether.test" class="StdClass">
-			<argument type="service" id="service_container"/>
-			<tag name="monolog.logger" channel="ClientCreatorSvc" />
-		</service>
-		<service id="service.aether.test" class="StdClass">
-			<argument type="service" id="service_container"/>
-			<tag name="monolog.logger" channel="ClientCreatorSvc" />
-		</service>
+		<!-- <service id="acn.svc.TermComms.handler" class="%acn.svc.TermComms.handler.class%">
+		</service> -->
 
 	</services>
 </container>

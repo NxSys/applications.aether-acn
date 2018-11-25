@@ -30,37 +30,45 @@ class ThruwayCommsWebsocketListener extends Core\Comms\BaseListener
 
 	/** @var object $oRatchetSockLoop description */
 	public $oRatchetSockLoop;
+
+	static $oThruwayHandler;
 	
 	public function listenLoop(): void
 	{
-		
+		printf(">>>CHECKPOINT %s::%s:%s<<<", __CLASS__, __FUNCTION__, __LINE__);
 		echo "'*'\n\n";
-		// debug_print_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
-
+		debug_print_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
+		
 		$sWsPath='wsapi';
+		//Thread::extend('Thruway\Peer\Client');
 		$oHandler=new ThruwayWampClient("Test");
 		$oHandler->setThreadContext($this->getThreadContext());
+		$this::$oThruwayHandler = $oHandler;
 
 		// $oHandler->on('open', [$oHandler, 'onSessionStart']);
 
 		$router = new Thruway\Peer\Router;
 		$this->oThruwayRouter=$router;
 		$transportProvider = new RatchetWampHandler("0.0.0.0", 9090);
+		//$oHandler->addTransportProvider($transportProvider);
+		
 		$router->addTransportProvider($transportProvider);
 		$router->addInternalClient($oHandler);
-
 		
 		$realmManager = new Thruway\RealmManager();
 		$router->registerModule($realmManager);
 		$router->setRealmManager($realmManager);
 		$router->getLoop()->addPeriodicTimer(1, [$this,'loopMaintenance']);
-
+		
+		//$oHandler->getLoop()->addPeriodicTimer(1, [$this,'loopMaintenance']);
 		$realm = new Thruway\Realm("Test");
 		$realmManager->addRealm($realm);
 
 		// $oHandler->start(true);
 		$router->start(false);
 		$router->getLoop()->run();
+		//$oHandler->start(false);
+		//$oHandler->getLoop()->run();
 		printf('Loop has returned. Listener is terminating...');
 		return;
 	}
@@ -102,7 +110,17 @@ class ThruwayCommsWebsocketListener extends Core\Comms\BaseListener
 			// printf(">>>CHECKPOINT %s::%s:%s<<<", __CLASS__, __FUNCTION__, __LINE__);
 			//var_dump($oEvent);
 		}
-
+		printf(">>>CHECKPOINT %s::%s:%s<<<", __CLASS__, __FUNCTION__, __LINE__);
+		//var_dump(spl_object_hash($this));
+		//var_dump(spl_object_hash($this::$oThruwayHandler));
+		//var_dump($this::$oThruwayHandler->aTerminals);
+		foreach ($this::$oThruwayHandler->aTerminals as $iTerminalId => $aTermData)
+		{
+			$this::$oThruwayHandler->notifyTerminal($iTerminalId, ["channel" => "sys", 
+																"event" => "heartbeat", 
+																"session" => (string) $iTerminalId, 
+																"data" => ["foo" => "bar"]]);
+		}
 		
 		//send events to thruway
 
@@ -111,13 +129,17 @@ class ThruwayCommsWebsocketListener extends Core\Comms\BaseListener
 
 	public function setThreadContext($oThread)
 	{
-		// printf(">>>CHECKPOINT %s::%s:%s<<<", __CLASS__, __FUNCTION__, __LINE__);
+		//printf(">>>CHECKPOINT %s::%s:%s<<<", __CLASS__, __FUNCTION__, __LINE__);
+		//debug_print_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
+
 		// var_dump(gettype($oThread));
 		$this->oThreadContext = $oThread;
 	}
 
-	protected function getThreadContext(): Thread
+	protected function getThreadContext(): Core\Execution\Job\Fiber
 	{
+		//printf(">>>CHECKPOINT %s::%s:%s<<<", __CLASS__, __FUNCTION__, __LINE__);
+		//var_dump(spl_object_hash($this->oThreadContext));
 		return $this->oThreadContext;
 	}
 	public function registerLoopHandler(Callable $hHandler){}

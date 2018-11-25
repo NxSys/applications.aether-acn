@@ -63,7 +63,18 @@ class ACNMain extends Core\Boot\Main
 	{
 
 		$this->log("Started");
+		
+		$this->log("//init Event Manager");
+		$oEventMgr = Container::getDependency('Aether.boot.eventmanager');
+		$oEventMgr->addEvent(new Core\Boot\Event\Event("terminal", "test"));
+		sleep(1);
+		$oEventMgr->processEvent();
+		return 0;
+		
 		$this->log("//init listeners");
+
+
+
 		// $hAcnCommsFiber=Container::getDependency('acn.svc.fiber.AcnComms');
 		/**
 		 * @var NxSys\Toolkits\Aether\SDK\Core\Execution\Job\Fiber
@@ -79,9 +90,8 @@ class ACNMain extends Core\Boot\Main
 
 		// $hTermCommsFiber->start();
 		// $hAcnCommsFiber->start();
-		$oEventMgr=new Core\Boot\Event\EventManager;
 		$hTermCommsFiber->setEventQueue($oEventMgr->getQueue());
-		$oEventMgr->addListener($hTermCommsFiber);
+		$oEventMgr->addHandler($hTermCommsFiber);
 
 		$oEventMgr->addEvent(new Core\Boot\Event\Event("sys", "start"));
 		$a=0;
@@ -101,7 +111,7 @@ class ACNMain extends Core\Boot\Main
 			$a++;
 			# code...
 		}
-		while ($a <= 60);
+		while ($a <= 300);
 		//clean up
 		$this->log("//Clean up");
 		$this->log("Stopping");
