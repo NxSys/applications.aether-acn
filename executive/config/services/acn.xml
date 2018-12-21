@@ -7,6 +7,18 @@
 		<import resource="acn-events.xml" />
 	</imports>
 	<parameters>
+		<parameter key="acn.cfg.acn.port">8354</parameter>
+
+		<parameter key="aether.terminal.prompt">Aether</parameter>
+		<parameter key="aether.terminal.prompt-terminator">}</parameter>
+		<!-- parameters -->
+		<parameter key="acn.cfg.ws.path">shsock</parameter>
+		<parameter key="acn.cfg.ws.port">9090</parameter>
+
+		<!-- parameters -->
+		<parameter key="aether1.param">userspace</parameter>
+		<parameter key="aether.param">dev_active</parameter>
+
 		<!-- classes -->
 		<parameter key="acn.svc.ListenerHostFiber.fiber.class">NxSys\Toolkits\Aether\SDK\Core\Comms\ListenerHostFiber</parameter>
 		<parameter key="acn.svc.TermComms.listener.class">NxSys\Applications\Aether\ACN\Listeners\ThruwayCommsWebsocketListener</parameter>
@@ -15,13 +27,14 @@
 		<!-- third party classes -->
 		<parameter key="symfony-console-application.class">Symfony\Component\Console\Application</parameter>
 
-		<!-- parameters -->
-		<parameter key="acn.cfg.ws.path">shsock</parameter>
-		<parameter key="acn.cfg.ws.port">9090</parameter>
+		<parameter key="base.constants" type="collection">
+			<parameter>APP_NAME</parameter>
+			<parameter>APP_IDENT</parameter>
+			<parameter>APP_VERSION</parameter>
+			<parameter>APP_BASE_DIR</parameter>
+			<parameter>APP_AUTOLOADER_FILE</parameter>
+		</parameter>
 
-		<!-- parameters -->
-		<parameter key="aether1.param">userspace</parameter>
-		<parameter key="aether.param">dev_active</parameter>
 	</parameters>
 	<services>
 		<service id="acn.svc.fiber.TermComms" class="%acn.svc.ListenerHostFiber.fiber.class%"
@@ -33,6 +46,9 @@
             <!--call method="setListener">
                 <argument type="service" id="acn.svc.TermComms.listener" />
             </call-->
+			<!-- <call method="setupConstants">
+				<argument key="$aConstants">%base.constants%</argument>
+			</call> -->
 		</service>
 
 		<service id="acn.svc.TermComms.listener" class="%acn.svc.TermComms.listener.class%" shared="false">

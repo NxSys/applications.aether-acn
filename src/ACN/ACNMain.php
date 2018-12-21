@@ -61,19 +61,13 @@ class ACNMain extends Core\Boot\Main
 
 	public function start(): int
 	{
-
-		$this->log("Started");
-		
+		$this->log("Starting ACN...");
 		$this->log("//init Event Manager");
 		$oEventMgr = Container::getDependency('Aether.boot.eventmanager');
-		$oEventMgr->addEvent(new Core\Boot\Event\Event("terminal", "test"));
-		sleep(1);
-		$oEventMgr->processEvent();
-		return 0;
+		$oEventMgr->addEvent(new Core\Boot\Event\Event("acn.sys", "starting"));
+		
 		
 		$this->log("//init listeners");
-
-
 
 		// $hAcnCommsFiber=Container::getDependency('acn.svc.fiber.AcnComms');
 		/**
@@ -82,7 +76,8 @@ class ACNMain extends Core\Boot\Main
 		$hTermCommsFiber=Container::getDependency('acn.svc.fiber.TermComms');
 		$oListener = Container::getDependency('acn.svc.TermComms.listener');
 		
-		$hTermCommsFiber->start(PTHREADS_INHERIT_CONSTANTS);
+		$hTermCommsFiber->setupConstants(Container::getConfigParam('base.constants'));
+		$hTermCommsFiber->start(PTHREADS_INHERIT_NONE);
 		$hTermCommsFiber->setListener($oListener);
 
 		$this->log("//init handler");
@@ -93,7 +88,7 @@ class ACNMain extends Core\Boot\Main
 		$hTermCommsFiber->setEventQueue($oEventMgr->getQueue());
 		$oEventMgr->addHandler($hTermCommsFiber);
 
-		$oEventMgr->addEvent(new Core\Boot\Event\Event("sys", "start"));
+		$oEventMgr->addEvent(new Core\Boot\Event\Event("acn.sys", "loopStarted"));
 		$a=0;
 		do
 		{
@@ -112,12 +107,15 @@ class ACNMain extends Core\Boot\Main
 			# code...
 		}
 		while ($a <= 300);
+		$oEventMgr->addEvent(new Core\Boot\Event\Event("acn.sys", "loopStopeded"));
 		//clean up
 		$this->log("//Clean up");
 		$this->log("Stopping");
 		$hTermCommsFiber->halt();
 		$hTermCommsFiber->join();
 		// sleep(5);
+		$this->log("ACN exiting...");
+		$oEventMgr->addEvent(new Core\Boot\Event\Event("acn.sys", "exited"));
 		return 0;
 	}
 

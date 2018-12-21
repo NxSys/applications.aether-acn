@@ -12,7 +12,6 @@ use Ratchet;
 use React;
 use Thread;
 use Thruway;
-use React\Tests\Dns\Query\RetryExecutorTest;
 
 class ThruwayCommsWebsocketListener extends Core\Comms\BaseListener
 {
@@ -40,7 +39,10 @@ class ThruwayCommsWebsocketListener extends Core\Comms\BaseListener
 		debug_print_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
 		
 		$sWsPath='wsapi';
-		//Thread::extend('Thruway\Peer\Client');
+		//Threaded::extend('Thruway\Peer\Client');
+
+
+
 		$oHandler=new ThruwayWampClient("Test");
 		$oHandler->setThreadContext($this->getThreadContext());
 		$this::$oThruwayHandler = $oHandler;
@@ -58,9 +60,9 @@ class ThruwayCommsWebsocketListener extends Core\Comms\BaseListener
 		$realmManager = new Thruway\RealmManager();
 		$router->registerModule($realmManager);
 		$router->setRealmManager($realmManager);
-		$router->getLoop()->addPeriodicTimer(1, [$this,'loopMaintenance']);
+		$router->getLoop()->addPeriodicTimer(.0001, [$this,'eventPump']);
 		
-		//$oHandler->getLoop()->addPeriodicTimer(1, [$this,'loopMaintenance']);
+		$router->getLoop()->addPeriodicTimer(1, [$this,'loopMaintenance']);
 		$realm = new Thruway\Realm("Test");
 		$realmManager->addRealm($realm);
 
@@ -85,6 +87,28 @@ class ThruwayCommsWebsocketListener extends Core\Comms\BaseListener
 		# code...
 	}
 
+	public function eventPump()
+	{
+		$oEvent = $this->getThreadContext()->getInEvent();
+
+		if ($oEvent !== null)
+		{
+			printf("%s saw [%s]%s event.\n", __FUNCTION__, $oEvent->getChannel(), $oEvent->getEvent());
+			// printf(">>>CHECKPOINT %s::%s:%s<<<", __CLASS__, __FUNCTION__, __LINE__);
+			//var_dump($oEvent);
+			if ($oEvent->getChannel() == "terminal.sys" && $oEvent->getEvent() == "output")
+			{
+				foreach ($this::$oThruwayHandler->aTerminals as $iTerminalId => $aTermData)
+				{
+					$this::$oThruwayHandler->notifyTerminal($iTerminalId, ["channel" => "sys", 
+														"event" => "output", 
+														"session" => (string) $iTerminalId, 
+														"data" => ["Output" => $oEvent->Output]]);
+				}
+			}
+		}
+
+	}
 
 	public function loopMaintenance()
 	{
@@ -102,28 +126,50 @@ class ThruwayCommsWebsocketListener extends Core\Comms\BaseListener
 		}
 
 		//check for ext events
-		$oEvent = $this->getThreadContext()->getInEvent();
-
-		if ($oEvent !== null)
-		{
-			printf("%s saw [%s]%s event.\n", __FUNCTION__, $oEvent->getChannel(), $oEvent->getEvent());
-			// printf(">>>CHECKPOINT %s::%s:%s<<<", __CLASS__, __FUNCTION__, __LINE__);
-			//var_dump($oEvent);
-		}
+		
 		printf(">>>CHECKPOINT %s::%s:%s<<<", __CLASS__, __FUNCTION__, __LINE__);
+
+		
 		//var_dump(spl_object_hash($this));
 		//var_dump(spl_object_hash($this::$oThruwayHandler));
 		//var_dump($this::$oThruwayHandler->aTerminals);
+		var_dump($this::$oThruwayHandler->aTerminals);
 		foreach ($this::$oThruwayHandler->aTerminals as $iTerminalId => $aTermData)
 		{
 			$this::$oThruwayHandler->notifyTerminal($iTerminalId, ["channel" => "sys", 
 																"event" => "heartbeat", 
 																"session" => (string) $iTerminalId, 
-																"data" => ["foo" => "bar"]]);
+																"data" => ["HEART" => "BEAT"]]);
 		}
 		
 		//send events to thruway
 
+	}
+
+	public function processEvents()
+	{
+		debug_print_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
+		while ($this->getThreadContext()->hasIn())
+		{
+			$oEvent = $this->getThreadContext()->getInEvent();
+
+			if ($oEvent !== null)
+			{
+				printf("%s saw [%s]%s event.\n", __FUNCTION__, $oEvent->getChannel(), $oEvent->getEvent());
+				// printf(">>>CHECKPOINT %s::%s:%s<<<", __CLASS__, __FUNCTION__, __LINE__);
+				//var_dump($oEvent);
+				if ($oEvent->getChannel() == "terminal.sys" && $oEvent->getEvent() == "output")
+				{
+					foreach ($oThruwayHandler->aTerminals as $iTerminalId => $aTermData)
+					{
+						$oThruwayHandler->notifyTerminal($iTerminalId, ["channel" => "sys", 
+															"event" => "output", 
+															"session" => (string) $iTerminalId, 
+															"data" => ["Output" => $oEvent->Output]]);
+					}
+				}
+			}
+		}
 	}
 
 

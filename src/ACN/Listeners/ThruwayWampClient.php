@@ -51,7 +51,7 @@ class ThruwayWampClient extends Thruway\Peer\Client
 		$this->aTerminals[$iSessionId] = [];
 		var_dump($this->aTerminals);
 		$this->oRouterSession->subscribe('sh.aether.acn.' . (string) $iSessionId, [$this, 'wsOnACNMessage']);
-
+		$this->oThreadContext->addEvent(new Event\Event('terminal', 'connect', ['SessionId' => $iSessionId]));
 	}
 
 	
@@ -59,7 +59,7 @@ class ThruwayWampClient extends Thruway\Peer\Client
 	public function wsOnACNMessage($args, $argsKw, $details, $publicationId)
 	{
 		$iSessionId = $argsKw->session;
-		$sChannel = $argsKw->channel;
+		$sChannel = 'terminal'; //Hardcoded to terminal channel to prevent spawning of internal events from external context
 		$sEvent = $argsKw->event;
 		$aData = $argsKw->data;
 		printf(">>>CHECKPOINT %s::%s:%s<<<\n", __CLASS__, __FUNCTION__, __LINE__);

@@ -4,19 +4,10 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 	<!--this is loaded after the ini file(s) are-->
 	<parameters>
+
 		<!-- classes -->
-		<parameter key="Aether.boot.eventmanager.class">NxSys\Toolkits\Aether\SDK\Core\Boot\Event\EventManager</parameter>
-		<parameter key="Aether.boot.eventmanager.factory.class">NxSys\Toolkits\Aether\SDK\Core\Boot\Event\EventManagerFactory</parameter>
-		<parameter key="Aether.webcontroller.class">NxSys\Frameworks\Aether\Terminal\Web\DefaultWebController</parameter>
-
-		<!-- third party classes -->
-		<parameter key="Aether.webprocessor.class">Silex\Application</parameter>
-		<parameter key="symfony-console-application.class">Symfony\Component\Console\Application</parameter>
-
-		<!-- parameters -->
-
-		<parameter key="aether.terminal.prompt">Aether</parameter>
-		<parameter key="aether.terminal.prompt-terminator">}</parameter>
+		<parameter key="aether.boot.eventmanager.class">NxSys\Toolkits\Aether\SDK\Core\Boot\Event\EventManager</parameter>
+		<parameter key="aether.boot.eventmanager.factory.class">NxSys\Toolkits\Aether\SDK\Core\Boot\Event\EventManagerFactory</parameter>
 	</parameters>
 
 	<services>
@@ -26,47 +17,11 @@
 			<tag name="monolog.logger" channel="ClientCreatorSvc" />
 		</service>
 
-		<!--Routes for silex-->
-		<service id="Aether.webprocessor" class="%Aether.webprocessor.class%">
-			<call method="get">
-				<argument>/</argument>
-				 <argument type="collection">
-					<argument type="service" id="Aether.webcontroller"/>
-					<argument>getWebConsole</argument>
-				 </argument>
-			</call>
-			<call method="get">
-				<argument>/docmd/{s_SID}/{s_Command}</argument>
-				 <argument type="collection">
-					<argument type="service" id="Aether.webcontroller"/>
-					<argument>processCommand</argument>
-				 </argument>
-			</call>
-			<call method="post">
-				<argument>/docmd</argument>
-				 <argument type="collection">
-					<argument type="service" id="Aether.webcontroller"/>
-					<argument>processPostedCommand</argument>
-				 </argument>
-			</call>
-			<call method="get">
-				<argument>/system/loadTemplate/{sTemplateName}</argument>
-				 <argument type="collection">
-					<argument type="service" id="Aether.webcontroller"/>
-					<argument>getSysUiTemplate</argument>
-				 </argument>
-			</call>
-		</service>
-
-		<service id="Aether.webcontroller" class="%Aether.webcontroller.class%">
-			<argument type="service" id="Aether.webprocessor"/>
-		</service>
-
-		<service id="Aether.boot.eventmanager" class="%Aether.boot.eventmanager.class%">
+		<service id="aether.boot.eventmanager" class="%aether.boot.eventmanager.class%">
 			<factory service="Aether.boot.eventmanager.factory" method="initializeEventManager"/>
 		</service>
 
-		<service id="Aether.boot.eventmanager.factory" class="%Aether.boot.eventmanager.factory.class%">
+		<service id="aether.boot.eventmanager.factory" class="%aether.boot.eventmanager.factory.class%">
 			<argument type="service" id="service_container" />
 		</service>
 
