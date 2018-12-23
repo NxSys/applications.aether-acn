@@ -15,8 +15,6 @@ use Thruway;
 
 class ThruwayCommsWebsocketListener extends Core\Comms\BaseListener
 {
-	public $oThreadContext;
-
 	public $hSockServer;
 	/** @var string $sHost Hostheader */
 	protected $sHost = null;
@@ -171,22 +169,4 @@ class ThruwayCommsWebsocketListener extends Core\Comms\BaseListener
 			}
 		}
 	}
-
-
-	public function setThreadContext($oThread)
-	{
-		//printf(">>>CHECKPOINT %s::%s:%s<<<", __CLASS__, __FUNCTION__, __LINE__);
-		//debug_print_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
-
-		// var_dump(gettype($oThread));
-		$this->oThreadContext = $oThread;
-	}
-
-	protected function getThreadContext(): Core\Execution\Job\Fiber
-	{
-		//printf(">>>CHECKPOINT %s::%s:%s<<<", __CLASS__, __FUNCTION__, __LINE__);
-		//var_dump(spl_object_hash($this->oThreadContext));
-		return $this->oThreadContext;
-	}
-	public function registerLoopHandler(Callable $hHandler){}
 }

@@ -27,6 +27,7 @@ src/ACN/Handlers/ACNEventHandlerFactory.php -text
 src/ACN/Handlers/TerminalEndpointHandler.php -text
 src/ACN/ListenerFiber.php -text
 src/ACN/Listeners/RatchetCommsWebsocketListener.php -text
+src/ACN/Listeners/RatchetSoapListener.php -text
 src/ACN/Listeners/RatchetWampHandler.php -text
 src/ACN/Listeners/ThruwayCommsWebsocketListener.php -text
 src/ACN/Listeners/ThruwayWampClient.php -text

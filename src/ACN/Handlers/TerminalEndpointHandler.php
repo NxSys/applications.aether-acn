@@ -5,6 +5,10 @@ namespace NxSys\Applications\Aether\ACN\Handlers;
 use NxSys\Toolkits\Aether\SDK\Core\Boot\Event\Event;
 use NxSys\Toolkits\Aether\SDK\Core\Boot\Container;
 
+
+/**
+ * @Channels terminal|terminal.command|terminal.meta|terminal.sys
+ */
 class TerminalEndpointHandler
 {
 	public function handleEvent(Event $oEvent)
@@ -19,7 +23,7 @@ class TerminalEndpointHandler
 		{
 			case 'execute':
 			{
-				$this->onExecute($oEvent->SessionId, $oEvent->ExecutionId, $oEvent->Command);
+				$this->onExecute($oEvent->SessionId, (int) $oEvent->ExecutionId, $oEvent->Command);
 				break;
 			}
 
