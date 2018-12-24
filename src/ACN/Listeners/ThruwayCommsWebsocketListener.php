@@ -29,13 +29,13 @@ class ThruwayCommsWebsocketListener extends Core\Comms\BaseListener
 	public $oRatchetSockLoop;
 
 	static $oThruwayHandler;
-	
+
 	public function listenLoop(): void
 	{
 		printf(">>>CHECKPOINT %s::%s:%s<<<", __CLASS__, __FUNCTION__, __LINE__);
 		echo "'*'\n\n";
 		debug_print_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
-		
+
 		$sWsPath='wsapi';
 		//Threaded::extend('Thruway\Peer\Client');
 
@@ -51,15 +51,15 @@ class ThruwayCommsWebsocketListener extends Core\Comms\BaseListener
 		$this->oThruwayRouter=$router;
 		$transportProvider = new RatchetWampHandler("0.0.0.0", 9090);
 		//$oHandler->addTransportProvider($transportProvider);
-		
+
 		$router->addTransportProvider($transportProvider);
 		$router->addInternalClient($oHandler);
-		
+
 		$realmManager = new Thruway\RealmManager();
 		$router->registerModule($realmManager);
 		$router->setRealmManager($realmManager);
 		$router->getLoop()->addPeriodicTimer(.0001, [$this,'eventPump']);
-		
+
 		$router->getLoop()->addPeriodicTimer(1, [$this,'loopMaintenance']);
 		$realm = new Thruway\Realm("Test");
 		$realmManager->addRealm($realm);
@@ -98,9 +98,9 @@ class ThruwayCommsWebsocketListener extends Core\Comms\BaseListener
 			{
 				foreach ($this::$oThruwayHandler->aTerminals as $iTerminalId => $aTermData)
 				{
-					$this::$oThruwayHandler->notifyTerminal($iTerminalId, ["channel" => "sys", 
-														"event" => "output", 
-														"session" => (string) $iTerminalId, 
+					$this::$oThruwayHandler->notifyTerminal($iTerminalId, ["channel" => "sys",
+														"event" => "output",
+														"session" => (string) $iTerminalId,
 														"data" => ["Output" => $oEvent->Output]]);
 				}
 			}
@@ -124,27 +124,27 @@ class ThruwayCommsWebsocketListener extends Core\Comms\BaseListener
 		}
 
 		//check for ext events
-		
-		printf(">>>CHECKPOINT %s::%s:%s<<<", __CLASS__, __FUNCTION__, __LINE__);
 
-		
+		// printf(">>>CHECKPOINT %s::%s:%s<<<", __CLASS__, __FUNCTION__, __LINE__);
+
+
 		//var_dump(spl_object_hash($this));
 		//var_dump(spl_object_hash($this::$oThruwayHandler));
 		//var_dump($this::$oThruwayHandler->aTerminals);
-		var_dump($this::$oThruwayHandler->aTerminals);
+		// var_dump($this::$oThruwayHandler->aTerminals);
 		foreach ($this::$oThruwayHandler->aTerminals as $iTerminalId => $aTermData)
 		{
-			$this::$oThruwayHandler->notifyTerminal($iTerminalId, ["channel" => "sys", 
-																"event" => "heartbeat", 
-																"session" => (string) $iTerminalId, 
+			$this::$oThruwayHandler->notifyTerminal($iTerminalId, ["channel" => "sys",
+																"event" => "heartbeat",
+																"session" => (string) $iTerminalId,
 																"data" => ["HEART" => "BEAT"]]);
 		}
-		
+
 		//send events to thruway
 
 	}
 
-	public function processEvents()
+	public function processEvents(): void
 	{
 		debug_print_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
 		while ($this->getThreadContext()->hasIn())
@@ -160,9 +160,9 @@ class ThruwayCommsWebsocketListener extends Core\Comms\BaseListener
 				{
 					foreach ($oThruwayHandler->aTerminals as $iTerminalId => $aTermData)
 					{
-						$oThruwayHandler->notifyTerminal($iTerminalId, ["channel" => "sys", 
-															"event" => "output", 
-															"session" => (string) $iTerminalId, 
+						$oThruwayHandler->notifyTerminal($iTerminalId, ["channel" => "sys",
+															"event" => "output",
+															"session" => (string) $iTerminalId,
 															"data" => ["Output" => $oEvent->Output]]);
 					}
 				}

@@ -38,11 +38,6 @@ class ACNMain extends Core\Boot\Main
 {
 	public $sShortName='acn';
 
-	public function __contruct(Type $var = null)
-	{
-		# code...
-	}
-
 	public function getShortName(): string
 	{
 		return $this->sShortName;
@@ -65,8 +60,8 @@ class ACNMain extends Core\Boot\Main
 		$this->log("//init Event Manager");
 		$oEventMgr = Container::getDependency('Aether.boot.eventmanager');
 		$oEventMgr->addEvent(new Core\Boot\Event\Event("acn.sys", "starting"));
-		
-		
+
+
 		$this->log("//init listeners");
 
 		// $hAcnCommsFiber=Container::getDependency('acn.svc.fiber.AcnComms');
@@ -75,7 +70,7 @@ class ACNMain extends Core\Boot\Main
 		 */
 		$hTermCommsFiber=Container::getDependency('acn.svc.fiber.TermComms');
 		$oListener = Container::getDependency('acn.svc.TermComms.listener');
-		
+
 		$hTermCommsFiber->setupConstants(Container::getConfigParam('base.constants'));
 		$hTermCommsFiber->start(PTHREADS_INHERIT_NONE);
 		$hTermCommsFiber->setListener($oListener);
@@ -106,8 +101,8 @@ class ACNMain extends Core\Boot\Main
 			$a++;
 			# code...
 		}
-		while ($a <= 300);
-		$oEventMgr->addEvent(new Core\Boot\Event\Event("acn.sys", "loopStopeded"));
+		while ($a <= 999999);
+		$oEventMgr->addEvent(new Core\Boot\Event\Event("acn.sys", "loopStoped"));
 		//clean up
 		$this->log("//Clean up");
 		$this->log("Stopping");
@@ -122,10 +117,7 @@ class ACNMain extends Core\Boot\Main
 
 	public function handleEvent(Core\Boot\Event\Event $oEv)
 	{
-		# code...
-		echo 'foooozzzzz....';
-		throw new \Exception("Error Processing Request", 1);
-
+		$this->log("Event: ".$oEv->getEvent(), (array) $oEv);
 	}
 
 	public function getChannels(): array

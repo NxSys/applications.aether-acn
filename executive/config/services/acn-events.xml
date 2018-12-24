@@ -7,6 +7,9 @@
 	<service class="\NxSys\Applications\Aether\ACN\Handlers\TerminalEndpointHandler">
 		<tag name="event.autohandle" channels="terminal|terminal.command|terminal.meta|terminal.sys" />
 	</service>
+	<service class="\NxSys\Applications\Aether\ACN\ACNMain">
+		<tag name="event.autohandle" channels="" events=""/>
+	</service>
 
 </services>
 </container>
