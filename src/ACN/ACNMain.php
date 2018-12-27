@@ -117,7 +117,7 @@ class ACNMain extends Core\Boot\Main
 
 	public function handleEvent(Core\Boot\Event\Event $oEv)
 	{
-		$this->log("Event: ".$oEv->getEvent(), (array) $oEv);
+		$this->log(sprintf("Observed %s:%s", $oEv->getChannel(), $oEv->getEvent()), (array) $oEv->getData());
 	}
 
 	public function getChannels(): array

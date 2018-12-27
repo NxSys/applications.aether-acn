@@ -60,7 +60,9 @@ class ThruwayCommsWebsocketListener extends Core\Comms\BaseListener
 		$router->setRealmManager($realmManager);
 		$router->getLoop()->addPeriodicTimer(.0001, [$this,'eventPump']);
 
-		$router->getLoop()->addPeriodicTimer(1, [$this,'loopMaintenance']);
+		// $router->getLoop()->addPeriodicTimer(1, [$this,'loopMaintenance']);
+		$loop=$router->getLoop();
+		$loop->addPeriodicTimer(1, function() use ($loop) { $this->loopMaintenance($loop); });
 		$realm = new Thruway\Realm("Test");
 		$realmManager->addRealm($realm);
 
@@ -70,6 +72,7 @@ class ThruwayCommsWebsocketListener extends Core\Comms\BaseListener
 		//$oHandler->start(false);
 		//$oHandler->getLoop()->run();
 		printf('Loop has returned. Listener is terminating...');
+		printf(">>>CHECKPOINT %s::%s:%s<<<", __CLASS__, __FUNCTION__, __LINE__);
 		return;
 	}
 
@@ -91,7 +94,7 @@ class ThruwayCommsWebsocketListener extends Core\Comms\BaseListener
 
 		if ($oEvent !== null)
 		{
-			printf("%s saw [%s]%s event.\n", __FUNCTION__, $oEvent->getChannel(), $oEvent->getEvent());
+			// printf("%s saw [%s]%s event.\n", __FUNCTION__, $oEvent->getChannel(), $oEvent->getEvent());
 			// printf(">>>CHECKPOINT %s::%s:%s<<<", __CLASS__, __FUNCTION__, __LINE__);
 			//var_dump($oEvent);
 			if ($oEvent->getChannel() == "terminal.sys" && $oEvent->getEvent() == "output")
@@ -118,8 +121,8 @@ class ThruwayCommsWebsocketListener extends Core\Comms\BaseListener
 		{
 		// printf(">>>CHECKPOINT %s::%s:%s<<<", __CLASS__, __FUNCTION__, __LINE__);
 			$this->oThruwayRouter->getLoop()->stop();
-			echo "AHHHHHHHHHHHHHHHHHHHHHHHHH";
-			exit;
+			//log("AHHHHHHHHHHHHHHHHHHHHHHHHH");
+			//exit;
 			// printf(">>>CHECKPOINT %s::%s:%s<<<", __CLASS__, __FUNCTION__, __LINE__);
 		}
 
