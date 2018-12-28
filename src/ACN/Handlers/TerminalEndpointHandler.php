@@ -13,7 +13,7 @@ class TerminalEndpointHandler
 {
 	public function handleEvent(Event $oEvent)
 	{
-		//printf(">>>CHECKPOINT %s::%s:%s<<<", __CLASS__, __METHOD__, __LINE__);
+		printf(">>>CHECKPOINT %s::%s:%s<<<", __CLASS__, __METHOD__, __LINE__);
 		$this->oEventMgr = Container::getDependency('aether.boot.eventmanager');
 		//$oEventMgr->addEvent(new Event("terminal.command", "output", [1,1,'foooooooo']));
 
@@ -34,7 +34,9 @@ class TerminalEndpointHandler
 			}
 			default:
 			{
-				$this->oEventMgr->addEvent(new Event("terminal.sys", "output", ["Output" => 'i do not know this event']));
+				$this->oEventMgr->addEvent(new Event("terminal.sys", "output", ["Output" => 'i do not know this event '
+																				.sprintf('%s:%s',
+																				$oEvent->getChannel(), $oEvent->getEvent())]));
 				break;
 			}
 		}
@@ -72,12 +74,20 @@ class TerminalEndpointHandler
 		//package...
 
 		//...and send
-		$oRceService=new \Zend\Soap\Client(null, ['location'=> $sRceLocator, 'uri' => '']);
-		$ret=$oRceService->sendEvent('INVALID!INVALID!INVALID!INVALID!', //session key
-									 'rce.submissions',
-									 'newCommand',
-									 ['iExecutionId' => $iExecutionId,
-									 'command' => $sCmd]);
+		$oRceService=new \Zend\Soap\Client(null, ['location'=> $sRceLocator, 'uri' => 'http://stds.aether.sh/soap',
+			'connection_timeout' => 3]);
+		try
+		{
+			$ret=$oRceService->sendEvent('INVALID!INVALID!INVALID!INVALID!', //session key
+										'rce.submissions',
+										'newCommand',
+										['iExecutionId' => $iExecutionId,
+										'command' => $sCmd]);
+		}
+		catch (SoapFault $th)
+		{
+			print_r($th);
+		}
 
 		//set exec status as pending start
 		return $ret;
