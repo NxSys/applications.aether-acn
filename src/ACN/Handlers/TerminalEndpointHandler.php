@@ -5,6 +5,7 @@ namespace NxSys\Applications\Aether\ACN\Handlers;
 use NxSys\Toolkits\Aether\SDK\Core\Boot\Event\Event;
 use NxSys\Toolkits\Aether\SDK\Core\Boot\Container;
 
+use SoapFault;
 
 /**
  * @Channels terminal|terminal.command|terminal.meta|terminal.sys
@@ -55,9 +56,9 @@ class TerminalEndpointHandler
 		printf(">>>CHECKPOINT %s::%s:%s<<<", __CLASS__, __FUNCTION__, __LINE__);
 		//if($sCmd)
 		// just an echo for now
-		$this->callRemoteCommand($iExecutionId, $sCmd);
+		$iExecId=$this->callRemoteCommand($iExecutionId, $sCmd);
 		$this->oEventMgr->addEvent(new Event("terminal.sys", "output",
-								   ["Output" => print_r("This is some output for $sCmd!", true)]));
+								   ["Output" => print_r("This is some output for $sCmd! - ".$iExecId, true)]));
 		return;
 	}
 
@@ -74,11 +75,12 @@ class TerminalEndpointHandler
 		//package...
 
 		//...and send
-		$oRceService=new \Zend\Soap\Client(null, ['location'=> $sRceLocator, 'uri' => 'http://stds.aether.sh/soap',
-			'connection_timeout' => 3]);
+		$oRceService=new \Zend\Soap\Client(null, ['location'=> $sRceLocator,
+												  'uri' => 'http://stds.aether.sh/soap',
+												  'connection_timeout' => 3]);
 		try
 		{
-			$ret=$oRceService->sendEvent('INVALID!INVALID!INVALID!INVALID!', //session key
+			$ret=$oRceService->addEvent('INVALID!INVALID!INVALID!INVALID!', //session key
 										'rce.submissions',
 										'newCommand',
 										['iExecutionId' => $iExecutionId,
@@ -86,7 +88,9 @@ class TerminalEndpointHandler
 		}
 		catch (SoapFault $th)
 		{
-			print_r($th);
+			sprintf('TEH Error %s:%s',$th->getMessage(), $th->getCode() );
+			$this->oEventMgr->addEvent(new Event('sys.error', 'rce-comm-failure', ['msg'=>'Caught a SoapFault: '.$th->getMessage()]));
+			$ret=-1;
 		}
 
 		//set exec status as pending start

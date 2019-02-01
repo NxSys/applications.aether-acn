@@ -54,7 +54,6 @@ class ThruwayWampClient extends Thruway\Peer\Client
 		$this->oThreadContext->addEvent(new Event\Event('terminal', 'connect', ['SessionId' => $iSessionId]));
 	}
 
-	
 
 	public function wsOnACNMessage($args, $argsKw, $details, $publicationId)
 	{

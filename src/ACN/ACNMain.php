@@ -96,12 +96,17 @@ class ACNMain extends Core\Boot\Main
 			//internal?
 
 			//error handling/recovery
+			if ($iPendEventCount=count($oEventMgr->getQueue()))
+			{
+				$this->log(sprintf('Main queue is %s events deep.', $iPendEventCount));
+			}
+
 			$oEventMgr->processEvent();
-			sleep(1);
+			usleep(500000);
 			$a++;
 			# code...
 		}
-		while ($a <= 999999);
+		while ($a <= 100000);
 		$oEventMgr->addEvent(new Core\Boot\Event\Event("acn.sys", "loopStoped"));
 		//clean up
 		$this->log("//Clean up");

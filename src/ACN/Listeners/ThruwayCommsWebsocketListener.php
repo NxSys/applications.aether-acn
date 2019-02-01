@@ -58,7 +58,7 @@ class ThruwayCommsWebsocketListener extends Core\Comms\BaseListener
 		$realmManager = new Thruway\RealmManager();
 		$router->registerModule($realmManager);
 		$router->setRealmManager($realmManager);
-		$router->getLoop()->addPeriodicTimer(.0001, [$this,'eventPump']);
+		$router->getLoop()->addPeriodicTimer(.0001, function() { $this->eventPump(); });
 
 		// $router->getLoop()->addPeriodicTimer(1, [$this,'loopMaintenance']);
 		$loop=$router->getLoop();
