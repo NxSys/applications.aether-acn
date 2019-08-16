@@ -54,6 +54,11 @@
             "type": "path",
 			"url": "../toolkits.aether-sdk",
 			"options": {"symlink":true }
+		},
+		{
+            "type": "path",
+			"url": "C:\\dev\\projects\\onx\\onx.toolkits\\parallax",
+			"options": {"symlink":true }
 		}
 	],
     "minimum-stability": "dev",
